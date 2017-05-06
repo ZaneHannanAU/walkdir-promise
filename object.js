@@ -21,8 +21,6 @@ const oTree = module.exports = ({
 
     if (typeof filter === 'function')
       list = list.filter(filter);
-    if (typeof map === 'function')
-      list = list.map(map);
 
     var pending = list.length;
     if (!pending)
@@ -44,17 +42,18 @@ const oTree = module.exports = ({
           if (err) return reject(err);
 
           if (stat && stat.isDirectory()) {
-            if (depth) {
+            if (depth > 0) {
               oTree({
                   dir: path.join(dir, file),
                   depth: depth-1,
                   child: true,
                   ignore,
-                  dotfiles
+                  dotfiles,
+                  filter, map
               }).then(res => {
                 results.children.push(res);
                 if (!--pending)
-                  resolve(results);
+                  resolve(typeof map === 'function' ? map(results) : results);
                 return;
               }, reject);
             } else {
@@ -62,6 +61,9 @@ const oTree = module.exports = ({
                 path: path.join(dir, file),
                 isDir: true
               })
+              if (!--pending)
+                resolve(typeof map === 'function' ? map(results) : results);
+              return;
             }
             return;
           } else {
@@ -69,7 +71,7 @@ const oTree = module.exports = ({
               path: path.join(dir, file)
             })
             if (!--pending)
-              resolve(results)
+              resolve(typeof map === 'function' ? map(results) : results);
             return;
           }
         });

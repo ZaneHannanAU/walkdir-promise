@@ -7,7 +7,7 @@ const aTree = module.exports = ({
   dotfiles = false,
   depth = Infinity,
   child = false,
-  filter, map
+  filter
 }) => new Promise((resolve, reject) => {
   var results = [
     // Big nothing at the start I guess.
@@ -21,8 +21,6 @@ const aTree = module.exports = ({
 
     if (typeof filter === 'function')
       list = list.filter(filter);
-    if (typeof map === 'function')
-      list = list.map(map);
 
     var pending = list.length;
     if (!pending)
@@ -44,13 +42,14 @@ const aTree = module.exports = ({
           if (err) return reject(err);
 
           if (stat && stat.isDirectory()) {
-            if (depth) {
+            if (depth > 0) {
               aTree({
                   dir: path.join(dir, file),
                   depth: depth-1,
                   child: true,
                   ignore,
-                  dotfiles
+                  dotfiles,
+                  filter
               }).then(res => {
                 results = results.concat(res);
                 if (!--pending)
@@ -59,6 +58,9 @@ const aTree = module.exports = ({
               }, reject);
             } else {
               results.push(path.join(dir, file))
+              if (!--pending)
+                resolve(results);
+              return;
             }
             return;
           } else {
