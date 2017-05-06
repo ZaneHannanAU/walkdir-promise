@@ -44,12 +44,12 @@ const oTree = module.exports = ({
           if (stat && stat.isDirectory()) {
             if (depth > 0) {
               oTree({
-                  dir: path.join(dir, file),
-                  depth: depth-1,
-                  child: true,
-                  ignore,
-                  dotfiles,
-                  filter, map
+                dir: path.join(dir, file),
+                depth: depth-1,
+                child: true,
+                ignore,
+                dotfiles,
+                filter, map
               }).then(res => {
                 results.children.push(res);
                 if (!--pending)
