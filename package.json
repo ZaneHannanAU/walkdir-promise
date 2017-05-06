@@ -1,7 +1,7 @@
 {
-  "name": "walkdir-promise",
-  "version": "1.0.0",
-  "description": "Promise based directory walking, for node.js/nom",
+  "name": "walkdirp",
+  "version": "1.1.0",
+  "description": "Promise based directory walking, for node.js/npm",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
