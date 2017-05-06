@@ -68,10 +68,32 @@ console.dir([
 
 ## Extras
 
+
++ Ignoring by name can be done in-line via the `ignore` option:
+
+	```JavaScript
+	walkdirp({
+		dir: require('os').homedir(),
+		ignore: ['Games', 'Downloads', 'Calibre Library', 'Trash']
+	})
+	```
+
+	It force disables scanning of `node_modules` by default.
++ dotfiles disabled by default. Enable:
+
+	```JavaScript
+	walkdirp({
+		dir: require('os').homedir(),
+		dotfiles: true // dotfiles visible
+	}) // woah
+	```
 + Filtering can be done in-line via the `filter` option:
 
 	```JavaScript
-	walkdirp({ dir: require('os').homedir(), filter: /* an array filtration function */})
+	walkdirp({
+		dir: require('os').homedir(),
+		filter: /* an array filtration function */ name => !/^\./.test(name)
+	})
 	```
 
 	It is closely replicated via the `ignore` option, however may prove useful in searching for a single dir instead of just excluding a few.
