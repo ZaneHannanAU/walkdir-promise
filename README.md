@@ -27,37 +27,40 @@ walkdirp.aTree(opts)
 ### ES6
 
 ```javascript
-var { homedir } = require('os')
-,      walkdirp = require('walkdirp')
+const walkdirp = require('./')
+,  { homedir } = require('os')
+,         opts = { dir: homedir(), depth: 1 };
+
 
 async function oTree(options) {
 	var tree;
 	try {
-		tree = await walkdirp.oTree(options)
+		tree = await walkdirp.oTree(options);
 	} catch (e) {
 		console.error(e);
-		return;
+		return {err: e};
 	} finally {
-		return list
+		// do stuff
+		return tree
 	}
 }
 
 async function aTree(options) {
 	var tree;
 	try {
-		tree = await walkdirp.aTree(options)
+		tree = await walkdirp.aTree(options);
 	} catch (e) {
 		console.error(e);
-		return;
+		return {err: e};
 	} finally {
-		return list
+		// do stuff
+		return tree
 	}
 }
 
-console.dir([
-	aTree({ dir: homedir(), depth: 3 }),
-	oTree({ dir: homedir(), depth: 3 })
-])
+Promise.all([aTree(opts),oTree(opts)])
+.then(tree => console.dir(tree)) // Wowza!
+.catch(console.error)
 ```
 
 ## Notes
