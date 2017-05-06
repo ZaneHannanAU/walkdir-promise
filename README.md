@@ -4,13 +4,13 @@ Promise based directory walking.
 
 ## Installation
 
-```shell
+```bash
 npm install --save walkdirp
 ```
 
 ## Demo
 
-```JavaScript
+```javascript
 var { homedir } = require('os')
 ,      walkdirp = require('walkdirp')
 ,          opts = { dir: homedir(), depth: 1 }
@@ -26,7 +26,7 @@ walkdirp.aTree(opts)
 
 ### ES6
 
-```JavaScript
+```javascript
 var { homedir } = require('os')
 ,      walkdirp = require('walkdirp')
 
@@ -71,7 +71,7 @@ console.dir([
 
 + Ignoring by name can be done in-line via the `ignore` option:
 
-	```JavaScript
+	```javascript
 	walkdirp({
 		dir: require('os').homedir(),
 		ignore: ['Games', 'Downloads', 'Calibre Library', 'Trash']
@@ -81,7 +81,7 @@ console.dir([
 	It force disables scanning of `node_modules` by default.
 + dotfiles disabled by default. Enable:
 
-	```JavaScript
+	```javascript
 	walkdirp({
 		dir: require('os').homedir(),
 		dotfiles: true // dotfiles visible
@@ -89,7 +89,7 @@ console.dir([
 	```
 + Filtering can be done in-line via the `filter` option:
 
-	```JavaScript
+	```javascript
 	walkdirp({
 		dir: require('os').homedir(),
 		filter: /* an array filtration function */ name => !/^\./.test(name)
@@ -99,7 +99,7 @@ console.dir([
 	It is closely replicated via the `ignore` option, however may prove useful in searching for a single dir instead of just excluding a few.
 + Can modify tokens in-line via the `map` option (`Object`/`oTree` only):
 
-	```JavaScript
+	```javascript
 	var mime = require('mime')
 	walkdirp.Object({
 		dir: home,
