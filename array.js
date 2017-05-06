@@ -7,7 +7,7 @@ const aTree = module.exports = ({
   dotfiles = false,
   depth = Infinity,
   child = false,
-  filter
+  filter, map
 }) => new Promise((resolve, reject) => {
   var results = [
     // Big nothing at the start I guess.
@@ -21,6 +21,8 @@ const aTree = module.exports = ({
 
     if (typeof filter === 'function')
       list = list.filter(filter);
+    if (typeof map === 'function')
+      list = list.map(map);
 
     var pending = list.length;
     if (!pending)

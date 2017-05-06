@@ -7,7 +7,7 @@ const oTree = module.exports = ({
   dotfiles = false,
   depth = Infinity,
   child = false,
-  filter
+  filter, map
 }) => new Promise((resolve, reject) => {
   var results = {
     path: dir,
@@ -21,6 +21,8 @@ const oTree = module.exports = ({
 
     if (typeof filter === 'function')
       list = list.filter(filter);
+    if (typeof map === 'function')
+      list = list.map(map);
 
     var pending = list.length;
     if (!pending)
