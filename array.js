@@ -6,29 +6,41 @@ const aTree = module.exports = ({
   ignore = new Set(['node_modules']),
   dotfiles = false,
   depth = Infinity,
-  child = false
+  child = false,
+  filter
 }) => new Promise((resolve, reject) => {
-  var results = [];
+  var results = [
+    // Big nothing at the start I guess.
+  ];
+
   if (!child && !(ignore instanceof Set || ignore.has('node_modules')))
     ignore = new Set([...ignore, 'node_modules']);
 
   fs.readdir(dir, (err, list) => {
-    if (err) return reject(err)
+    if (err) return reject(err);
+
+    if (typeof filter === 'function')
+      list = list.filter(filter);
 
     var pending = list.length;
     if (!pending)
       return resolve(results);
+
     list.forEach(file => {
       if (!dotfiles && file.charAt(0)=='.') {
 
         if (!--pending)
-          return resolve(results);
-      } else if (ignore.has ? ignore.has(file) : ignore.includes(file)) {
+          resolve(results);
+        return;
+      } else if (ignore.has(file)) {
 
         if (!--pending)
-          return resolve(results);
+          resolve(results);
+        return;
       } else {
-        fs.stat(path.join(dir, file)).then(stat => {
+        fs.stat(path.join(dir, file), (err, stat) => {
+          if (err) return reject(err);
+
           if (stat && stat.isDirectory()) {
             if (depth) {
               aTree({
@@ -50,7 +62,8 @@ const aTree = module.exports = ({
           } else {
             results.push(path.join(dir, file));
             if (!--pending)
-              return resolve(results);
+              resolve(results);
+            return;
           }
         });
       }

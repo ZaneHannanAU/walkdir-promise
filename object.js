@@ -1,25 +1,30 @@
 var fs = require('fs')
 , path = require('path');
 
-
 const oTree = module.exports = ({
   dir,
   ignore = new Set(['node_modules']),
   dotfiles = false,
-  depth = Infinity
+  depth = Infinity,
+  child = false,
+  filter
 }) => new Promise((resolve, reject) => {
   var results = {
-    path: dir.replace(/\\|\//g, '/'),
-    children: []
-  }
+    path: dir,
+    children: []// Some set up
+  };
   if (!child && !(ignore instanceof Set || ignore.has('node_modules')))
     ignore = new Set([...ignore, 'node_modules']);
 
   fs.readdir(dir, (err, list) => {
     if (err) return reject(err);
-    var pending = list.length
 
-    if (!pending) return resolve(results);
+    if (typeof filter === 'function')
+      list = list.filter(filter);
+
+    var pending = list.length;
+    if (!pending)
+      return resolve(results);
 
     list.forEach(file => {
       if (!dotfiles && file.charAt(0)=='.') {
