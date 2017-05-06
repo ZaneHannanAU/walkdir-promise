@@ -1,6 +1,6 @@
-var { homedir } = require('os')
-,      walkdirp = require('./')
-,          opts = { dir: homedir(), depth: 1 }
+;;const os = require('os')
+,     opts = { dir: os.homedir(), depth: 1 }
+, walkdirp = require('./');
 
 if (process.env.npm_package_config_object === 'true') {
 	walkdirp.oTree(opts)

@@ -11,9 +11,9 @@ npm install --save walkdirp
 ## Demo
 
 ```javascript
-var { homedir } = require('os')
-,      walkdirp = require('walkdirp')
-,          opts = { dir: homedir(), depth: 1 }
+;;const os = require('os')
+,     opts = { dir: os.homedir(), depth: 1 }
+, walkdirp = require('./');
 
 walkdirp.oTree(opts)
 .then(list => console.dir(list)) // Wowza!
