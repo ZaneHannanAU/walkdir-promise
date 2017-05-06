@@ -1,0 +1,25 @@
+{
+  "name": "walkdir-promise",
+  "version": "1.0.0",
+  "description": "Promise based directory walking, for node.js/nom",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZaneHannanAU/walkdir-promise.git"
+  },
+  "keywords": [
+    "walkdir",
+    "tree",
+    "fs",
+    "files"
+  ],
+  "author": "ZaneHannanAU",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ZaneHannanAU/walkdir-promise/issues"
+  },
+  "homepage": "https://github.com/ZaneHannanAU/walkdir-promise#readme"
+}
