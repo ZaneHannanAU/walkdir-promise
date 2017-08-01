@@ -1,7 +1,7 @@
 var fs = require('fs')
 , path = require('path');
 
-const aTree = module.exports = ({
+const aTree = ({
   dir,
   ignore = new Set(['node_modules']),
   dotfiles = false,
@@ -74,3 +74,5 @@ const aTree = module.exports = ({
     });
   })
 });
+
+module.exports = require('util').deprecate(aTree, 'walkdirp/walkdir-promise has been deprecated in favour of ewalkdir');

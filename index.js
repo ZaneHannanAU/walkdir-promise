@@ -1,12 +1,14 @@
 const array = require('./array')
 ,    object = require('./object')
 
-module.exports = array;
+module.exports = array
 module.exports.Array = array;
 module.exports.aTree = array;
 
 module.exports.Object = object;
 module.exports.oTree = object;
+
+
 
 /* Terminology:
  * !--pending: Triggers if zero after decrementing value.
